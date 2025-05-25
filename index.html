@@ -1,0 +1,1569 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portofolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+        }
+
+        /* Splash Mare Portocaliu - mutat sus în loc de galben */
+        .big-splash {
+            position: absolute;
+            top: -200px;
+            right: -300px;
+            width: 800px;
+            height: 600px;
+            background: #FF6B35;
+            border-radius: 50% 30% 60% 40% / 40% 60% 30% 70%;
+            z-index: 1;
+            animation: float 10s ease-in-out infinite;
+        }
+
+        .profile-section {
+            text-align: center;
+            margin: 100px 0;
+            position: relative;
+            z-index: 10;
+            opacity: 0;
+            transform: translateY(60px);
+            animation: swooshUp 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.5s forwards;
+        }
+
+        @keyframes swooshUp {
+            0% {
+                opacity: 0;
+                transform: translateY(60px) scale(0.9);
+            }
+            60% {
+                opacity: 0.8;
+                transform: translateY(-10px) scale(1.02);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes profilePicSwoosh {
+            0% {
+                opacity: 0;
+                transform: translateY(40px) scale(0.8) rotate(-10deg);
+            }
+            70% {
+                opacity: 1;
+                transform: translateY(-8px) scale(1.1) rotate(2deg);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1) rotate(0deg);
+            }
+        }
+
+         .profile-pic {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: #333;
+            border: 6px solid #FFEF00;
+            margin: 0 auto 30px;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(40px) scale(0.8);
+            animation: profilePicSwoosh 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0.8s forwards;
+        }
+
+        @keyframes profilePicSwoosh {
+            0% {
+                opacity: 0;
+                transform: translateY(40px) scale(0.8) rotate(-10deg);
+            }
+            70% {
+                opacity: 1;
+                transform: translateY(-8px) scale(1.1) rotate(2deg);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1) rotate(0deg);
+            }
+        }
+
+        /* Imagine reală în loc de emoji */
+        .profile-pic img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .profile-pic:hover img {
+            transform: scale(1.1);
+        }
+
+        /* Fallback pentru când nu există imagine */
+        /* .profile-pic::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            background: #9C27B0;
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .profile-pic::after {
+            content: '👤';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+            color: #fff;
+            z-index: 2;
+        } */
+
+        /* Ascunde fallback-ul când există imagine */
+        .profile-pic img + .profile-pic::before,
+        .profile-pic img + .profile-pic::after {
+            display: none;
+        }
+
+        .profile-info h1 {
+            font-size: 4rem;
+            font-weight: 900;
+            letter-spacing: -2px;
+            margin-bottom: 20px;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: titleSwoosh 1s ease-out 1s forwards;
+        }
+
+        @keyframes titleSwoosh {
+            0% {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .profile-info .subtitle {
+            font-size: 1.1rem;
+            color: #ccc;
+            margin-bottom: 15px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: subtitleSwoosh 0.8s ease-out 1.2s forwards;
+        }
+
+        @keyframes subtitleSwoosh {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .profile-info .intro {
+            font-size: 1rem;
+            color: #aaa;
+            max-width: 500px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(15px);
+            animation: introSwoosh 0.8s ease-out 1.4s forwards;
+        }
+
+        .profile-info h1 {
+            font-size: 4rem;
+            font-weight: 900;
+            letter-spacing: -2px;
+            margin-bottom: 20px;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: titleSwoosh 1s ease-out 1s forwards;
+        }
+
+        @keyframes titleSwoosh {
+            0% {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .profile-info .subtitle {
+            font-size: 1.1rem;
+            color: #ccc;
+            margin-bottom: 15px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: subtitleSwoosh 0.8s ease-out 1.2s forwards;
+        }
+
+        @keyframes subtitleSwoosh {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .profile-info .intro {
+            font-size: 1rem;
+            color: #aaa;
+            max-width: 500px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(15px);
+            animation: introSwoosh 0.8s ease-out 1.4s forwards;
+        }
+
+        @keyframes introSwoosh {
+            0% {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes splashSwooshIn {
+            0% {
+                opacity: 0;
+                transform: translateY(100px) translateX(50px) scale(0.8) rotate(-10deg);
+            }
+            70% {
+                opacity: 0.9;
+                transform: translateY(-20px) translateX(-10px) scale(1.05) rotate(2deg);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) translateX(0) scale(1) rotate(0deg);
+            }
+        }
+
+        .big-splash-orange {
+            position: absolute;
+            bottom: -100px;
+            left: -200px;
+            width: 500px;
+            height: 400px;
+            background: #FFEF00;
+            border-radius: 60% 40% 30% 70% / 50% 30% 70% 50%;
+            z-index: 1;
+            opacity: 0;
+            transform: translateY(80px) translateX(-30px) scale(0.9);
+            animation: splashSwooshIn2 1.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.4s forwards,
+                       float 12s ease-in-out 2.5s infinite reverse;
+        }
+
+        @keyframes splashSwooshIn2 {
+            0% {
+                opacity: 0;
+                transform: translateY(80px) translateX(-30px) scale(0.9) rotate(15deg);
+            }
+            60% {
+                opacity: 0.8;
+                transform: translateY(-15px) translateX(5px) scale(1.02) rotate(-3deg);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) translateX(0) scale(1) rotate(0deg);
+            }
+        }
+
+        /* Small dots cu animații staggered */
+        .small-dot-1 {
+            position: absolute;
+            top: 100px;
+            left: 200px;
+            width: 60px;
+            height: 60px;
+            background: #FFEF00;
+            border-radius: 50%;
+            z-index: 2;
+            opacity: 0;
+            transform: translateY(40px) scale(0.5);
+            animation: dotSwoosh 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) 1.6s forwards,
+                       pulse 4s ease-in-out 2.5s infinite;
+        }
+
+        @keyframes dotSwoosh {
+            0% {
+                opacity: 0;
+                transform: translateY(40px) scale(0.5);
+            }
+            70% {
+                opacity: 1;
+                transform: translateY(-8px) scale(1.2);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .small-dot-2 {
+            position: absolute;
+            bottom: 300px;
+            right: 150px;
+            width: 40px;
+            height: 40px;
+            background: #FF6B35;
+            border-radius: 50%;
+            z-index: 2;
+            opacity: 0;
+            transform: translateY(30px) scale(0.6);
+            animation: dotSwoosh 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) 1.8s forwards,
+                       pulse 3s ease-in-out 2.7s infinite 1s;
+        }
+
+        .small-dot-3 {
+            position: absolute;
+            bottom: 150px;
+            right: 80px;
+            width: 60px;
+            height: 80px;
+            background: #FFEF00;
+            border-radius: 50% 30% 60% 40%;
+            transform: rotate(25deg);
+            z-index: 2;
+        }
+
+        /* Splash-uri suplimentare pentru zona de profil */
+        .splash-blob-1 {
+            position: absolute;
+            top: 20px;
+            left: 150px;
+            width: 80px;
+            height: 60px;
+            background: #FF6B35;
+            border-radius: 50% 60% 40% 30%;
+            transform: rotate(-15deg);
+            z-index: 1;
+            animation: float 6s ease-in-out infinite 2s;
+        }
+
+        .splash-blob-2 {
+            position: absolute;
+            bottom: 100px;
+            left: 50px;
+            width: 100px;
+            height: 70px;
+            background: #FFEF00;
+            border-radius: 60% 40% 50% 70%;
+            transform: rotate(45deg);
+            z-index: 1;
+            animation: float 8s ease-in-out infinite 1s;
+        }
+
+        /* Mini splash-uri cu animații dramatice */
+        .splash-mini-1 {
+            position: absolute;
+            top: 150px;
+            left: 80px;
+            width: 20px;
+            height: 20px;
+            background: #FF1744;
+            border-radius: 50%;
+            z-index: 2;
+            opacity: 0;
+            transform: translateY(25px) scale(0.3);
+            animation: miniSplashSwoosh 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) 2s forwards,
+                       pulse 3s ease-in-out 3s infinite 0.5s;
+        }
+
+        @keyframes miniSplashSwoosh {
+            0% {
+                opacity: 0;
+                transform: translateY(25px) scale(0.3);
+            }
+            80% {
+                opacity: 1;
+                transform: translateY(-5px) scale(1.3);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .splash-mini-2 {
+            position: absolute;
+            top: 80px;
+            right: 250px;
+            width: 15px;
+            height: 15px;
+            background: #9C27B0;
+            border-radius: 50%;
+            z-index: 2;
+            opacity: 0;
+            transform: translateY(20px) scale(0.4);
+            animation: miniSplashSwoosh 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) 2.2s forwards,
+                       pulse 4s ease-in-out 3.2s infinite 1.5s;
+        }
+
+        .splash-mini-3 {
+            position: absolute;
+            bottom: 80px;
+            right: 300px;
+            width: 35px;
+            height: 25px;
+            background: #3F51B5;
+            border-radius: 70% 30% 60% 40%;
+            transform: rotate(-30deg);
+            z-index: 2;
+            opacity: 0;
+            animation: organicSplashSwoosh 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) 2.4s forwards,
+                       float 5s ease-in-out 3.5s infinite 3s;
+        }
+
+        @keyframes organicSplashSwoosh {
+            0% {
+                opacity: 0;
+                transform: translateY(30px) scale(0.5) rotate(-50deg);
+            }
+            70% {
+                opacity: 1;
+                transform: translateY(-8px) scale(1.2) rotate(-10deg);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1) rotate(-30deg);
+            }
+        }
+
+        .splash-line-1 {
+            position: absolute;
+            top: 120px;
+            right: 180px;
+            width: 60px;
+            height: 4px;
+            background: #FFEF00;
+            border-radius: 2px;
+            transform: rotate(25deg);
+            z-index: 2;
+            animation: pulse 6s ease-in-out infinite 2.5s;
+        }
+
+        .splash-line-2 {
+            position: absolute;
+            bottom: 200px;
+            left: 200px;
+            width: 40px;
+            height: 3px;
+            background: #FF6B35;
+            border-radius: 2px;
+            transform: rotate(-45deg);
+            z-index: 2;
+            animation: pulse 5s ease-in-out infinite 1.8s;
+        }
+
+        /* Proiecte Grid - exact ca în imagine */
+        .projects-section {
+            margin-top: 80px;
+            position: relative;
+            z-index: 5;
+        }
+
+        .project-card {
+            background: #fff;
+            border-radius: 40px;
+            padding: 0;
+            margin-bottom: 30px;
+            overflow: hidden;
+            position: relative;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            cursor: pointer;
+            animation: introSwoosh 0.8s ease-out 1.4s forwards;
+        
+        }
+
+        .project-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            background: linear-gradient(135deg, #fff 0%, #f8f9ff 100%);
+        }
+
+        .project-card:hover::before {
+            width: 12px;
+            background: linear-gradient(45deg, #FF6B35, #FFEF00);
+        }
+
+        /* Orange line contur pentru fiecare card */
+        .project-card::before {
+            content: '';
+            position: absolute;
+            left: 0px;
+            top: 0;
+            bottom: 0;
+            width: 8px;
+            background: #FF6B35;
+            border-radius: 0 4px 4px 0;
+            z-index: 1;
+            transition: all 0.3s ease;
+        }
+
+        .project-content {
+            padding: 40px 40px 40px 50px;
+            color: #000;
+            position: relative;
+            z-index: 2;
+            flex: 1;
+        }
+
+        .project-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #000;
+        }
+
+        .project-tags {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .tag {
+            background: #FF6B35;
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tag::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #FFEF00, #FF1744);
+            transition: left 0.4s ease;
+            z-index: -1;
+        }
+
+        .tag:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(255, 107, 53, 0.4);
+        }
+
+        .tag:hover::before {
+            left: 0;
+        }
+
+        .project-description {
+            color: #333;
+            margin-bottom: 25px;
+            line-height: 1.5;
+            font-size: 0.95rem;
+        }
+
+        .project-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .go-btn {
+            background: #FF6B35;
+            color: #fff;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .go-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #FFEF00, #FF1744);
+            transition: left 0.4s ease;
+            z-index: -1;
+        }
+
+        .go-btn:hover {
+            transform: translateY(-3px) scale(1.1);
+            box-shadow: 0 8px 20px rgba(255, 107, 53, 0.4);
+        }
+
+        .go-btn:hover::before {
+            left: 0;
+        }
+
+        /* Screenshots placeholder în dreapta - eliminat */
+        .project-screenshots {
+            display: none;
+        }
+
+        /* CV Section */
+        .cv-section {
+            margin: 100px 0;
+            text-align: center;
+            position: relative;
+            z-index: 5;
+        }
+
+        .cv-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: 60px 40px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .cv-card h2 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .cv-card p {
+            font-size: 1.1rem;
+            opacity: 0.8;
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cv-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            border: none;
+            display: inline-block;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            transition: left 0.4s ease;
+            z-index: -1;
+        }
+
+        .btn-primary {
+            background: #FFEF00;
+            color: #000;
+        }
+
+        .btn-primary::before {
+            background: linear-gradient(45deg, #FF6B35, #FF1744);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(255, 239, 0, 0.4);
+            color: #fff;
+        }
+
+        .btn-primary:hover::before {
+            left: 0;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #FFEF00;
+            border: 2px solid #FFEF00;
+        }
+
+        .btn-secondary::before {
+            background: linear-gradient(135deg, #FFEF00, #FF6B35);
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(255, 239, 0, 0.3);
+            color: #000;
+            border-color: transparent;
+        }
+
+        .btn-secondary:hover::before {
+            left: 0;
+        }
+
+        /* Video Section */
+        .video-section {
+            margin: 100px 0;
+        }
+
+        .video-section h2 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .video-card {
+            aspect-ratio: 9/16;
+            background: linear-gradient(45deg, #FF6B35, #FFEF00);
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .video-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #FF1744, #9C27B0, #3F51B5);
+            transition: left 0.5s ease;
+            z-index: 1;
+        }
+
+        .video-card > div {
+            position: relative;
+            z-index: 2;
+        }
+
+        .video-card:hover {
+            transform: translateY(-8px) scale(1.05) rotate(2deg);
+            box-shadow: 0 15px 35px rgba(255, 107, 53, 0.4);
+        }
+
+        .video-card:hover::before {
+            left: 0;
+        }
+
+        .video-card:hover {
+            color: #fff;
+        }
+
+        .video-card::after {
+            content: '▶';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+            opacity: 0.3;
+            z-index: 1;
+            transition: all 0.3s ease;
+        }
+
+        .video-card:hover::after {
+            opacity: 0.8;
+            transform: translate(-50%, -50%) scale(1.2);
+        }
+
+        /* Books Section */
+        .books-section {
+            margin: 100px 0;
+        }
+
+        .books-section h2 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .book-card {
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .book-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #FF6B35, #FFEF00, #9C27B0);
+            transition: left 0.5s ease;
+            z-index: 1;
+            opacity: 0.1;
+        }
+
+        .book-card:hover {
+            transform: translateY(-12px) scale(1.05) rotate(1deg);
+            box-shadow: 0 20px 40px rgba(255, 239, 0, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 239, 0, 0.3);
+        }
+
+        .book-card:hover::before {
+            left: 0;
+        }
+
+        .book-card > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        .book-cover {
+            width: 180px;
+            height: 260px;
+            background: linear-gradient(145deg, #FFEF00, #FF6B35);
+            margin: 0 auto 25px;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            font-weight: 700;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .book-cover::before {
+            content: '📚';
+            font-size: 3rem;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .book-cover::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #9C27B0, #3F51B5, #FF1744);
+            transition: left 0.5s ease;
+            z-index: 1;
+        }
+
+        .book-cover > div {
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+
+        .book-card:hover .book-cover {
+            transform: translateY(-8px) scale(1.08) rotate(-2deg);
+            box-shadow: 0 20px 50px rgba(255, 107, 53, 0.4);
+        }
+
+        .book-card:hover .book-cover::after {
+            left: 0;
+        }
+
+        .book-card:hover .book-cover::before {
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        .book-card:hover .book-cover > div {
+            color: #fff;
+            transform: scale(1.1);
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 120px;
+            text-align: center;
+            padding: 60px 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer h2 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .social-links a {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: #FFEF00;
+            color: #000;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .profile-section {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+
+            .big-splash {
+                width: 300px;
+                height: 200px;
+                right: -100px;
+            }
+
+            .project-content {
+                padding: 30px 20px;
+            }
+
+            .project-screenshots {
+                display: none;
+            }
+
+            .video-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Animații subtile */
+        .big-splash {
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .small-dot-1, .small-dot-2, .small-dot-3 {
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        .small-dot-2 {
+            animation-delay: 1s;
+        }
+
+        .small-dot-3 {
+            animation-delay: 2s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.1); opacity: 1; }
+        }
+
+        .project-card {
+            transition: transform 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Video Card cu thumbnail */
+        .video-card.has-thumbnail {
+            background: none;
+            padding: 0;
+            text-decoration: none;
+            display: block;
+        }
+
+        .video-thumbnail {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.8), rgba(255, 239, 0, 0.6));
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: all 0.4s ease;
+            border-radius: 20px;
+        }
+
+        .video-card.has-thumbnail:hover .video-overlay {
+            opacity: 1;
+        }
+
+        .video-card.has-thumbnail:hover .video-thumbnail {
+            transform: scale(1.05);
+            filter: brightness(0.7);
+        }
+
+        .video-title {
+            color: #fff;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-align: center;
+            margin-bottom: 10px;
+            z-index: 3;
+        }
+
+        .play-icon {
+            font-size: 3rem;
+            color: #fff;
+            opacity: 0.9;
+            z-index: 3;
+        }
+
+        /* Book cover cu imagine reală */
+        .book-cover.has-image {
+            background: none;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .book-cover-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 20px;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .book-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(156, 39, 176, 0.8), rgba(63, 81, 181, 0.6), rgba(255, 23, 68, 0.4));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: all 0.5s ease;
+            border-radius: 20px;
+        }
+
+        .book-card:hover .book-cover.has-image .book-overlay {
+            opacity: 1;
+        }
+
+        .book-card:hover .book-cover.has-image .book-cover-image {
+            transform: scale(1.05);
+            filter: brightness(0.7);
+        }
+
+        .book-icon {
+            font-size: 3rem;
+            color: #fff;
+            opacity: 0.9;
+            z-index: 3;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Splash Elements - redesign complet -->
+        <div class="big-splash"></div>
+        <div class="big-splash-orange"></div>
+        <div class="small-dot-1"></div>
+        <div class="small-dot-2"></div>
+        
+        <!-- Mini splash-uri suplimentare -->
+        <div class="splash-mini-1"></div>
+        <div class="splash-mini-2"></div>
+        <div class="splash-mini-3"></div>
+
+        <!-- Profile Section -->
+        <div class="profile-section">
+            <div class="profile-pic">
+                <img src="itsme.JPG" alt="Profile Picture">
+            </div>
+            <div class="profile-info">
+                <h1>Maria-Teodora Popescu</h1>
+                <p>Hello, I am a creative and enthusiast computer science student with a passion for web design</p>
+            </div>
+        </div>
+
+        <!-- Projects Section -->
+        <div class="projects-section">
+
+             <div class="project-card">
+                <div class="project-content">
+                    <h3 class="project-title">Human Resources Management Application</h3>
+                    <div class="project-tags">
+                        <span class="tag">Eclipse</span>
+                        <span class="tag">Java EE</span>
+                        <span class="tag">MySQL</span>
+                        <span class="tag">HTML 5</span>
+                        <span class="tag">CSS 3</span>
+                        <span class="tag">Vanilla JS</span>
+                    </div>
+                    <p class="project-description">There is a light-weight HRMS. This is my diploma project.</p>
+                    <div class="project-actions">
+                        <a href="app1.html" class="go-btn">More details</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-content">
+                    <h3 class="project-title">Online Store</h3>
+                    <div class="project-tags">
+                        <span class="tag">Python3</span>
+                        <span class="tag">Django</span>
+                        <span class="tag">HTML 5</span>
+                        <span class="tag">CSS 3</span>
+                        <span class="tag">Vanilla JS</span>
+                        <span class="tag">E-Commerce</span>
+                    </div>
+                    <p class="project-description">Work in progress uni project. Soon, I will launch it.</p>
+                    <div class="project-actions">
+                        <a href="app2.html" class="go-btn">I want more</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-content">
+                    <h3 class="project-title">Characters</h3>
+                    <div class="project-tags">
+                        <span class="tag">HTML 5</span>
+                        <span class="tag">CSS 3</span>
+                        <span class="tag">Vanilla JS</span>
+                    </div>
+                    <p class="project-description">Here is a small webpage that showcases a few characters from tv series and comics. Still work in progress for something even bigger. Coming soon.</p>
+                    <div class="project-actions">
+                        <a href="https://peaceful-cocada-93e348.netlify.app/" class="go-btn">Visit</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-content">
+                    <h3 class="project-title">Carbon Rider</h3>
+                    <div class="project-tags">
+                        <span class="tag">Shopify</span>
+                        <span class="tag">E-Commerce</span>
+                    </div>
+                    <p class="project-description">University project did in a rush. Not really satisfied with it, considering my expertise in web development. I was constrained to use webpage generator.</p>
+                    <div class="project-actions">
+                        <a href="https://carbonrider.myshopify.com/" class="go-btn">Go for a ride!</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-content">
+                    <h3 class="project-title">Info pentru toti</h3>
+                    <div class="project-tags">
+                        <span class="tag">HTML 5</span>
+                        <span class="tag">CSS 3</span>
+                        <span class="tag">Vanilla JS</span>
+                    </div>
+                    <p class="project-description">There is a webpage in Romanian with tutorials and school materials about programming. I started it when I was in 7th grade and want to develop it more, stay tuned!</p>
+                    <div class="project-actions">
+                        <a href="https://frolicking-halva-69562d.netlify.app/" class="go-btn">Find more</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-content">
+                    <h3 class="project-title">MatrixEx</h3>
+                    <div class="project-tags">
+                        <span class="tag">HTML 5</span>
+                        <span class="tag">CSS 3</span>
+                        <span class="tag">Vanilla JS</span>
+                        <span class="tag">wasm</span>
+                        <span class="tag">c++</span>
+                    </div>
+                    <p class="project-description">This is my attempt to transform a c++ concole application into a web application. Stay tuned for a design update</p>
+                    <div class="project-actions">
+                        <a href="https://mellow-puppy-0d04ff.netlify.app/" class="go-btn">Access</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-content">
+                    <h3 class="project-title">Vanilla TODO List</h3>
+                    <div class="project-tags">
+                        <span class="tag">HTML 5</span>
+                        <span class="tag">CSS 3</span>
+                        <span class="tag">Vanilla JS</span>
+                    </div>
+                    <p class="project-description">There I implemented a todolist as a final project to a cisco web 101 course</p>
+                    <div class="project-actions">
+                        <a href="https://fabulous-travesseiro-d534ed.netlify.app/" class="go-btn">Go</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-content">
+                    <h3 class="project-title">Apple front page clone</h3>
+                    <div class="project-tags">
+                        <span class="tag">HTML 5</span>
+                        <span class="tag">CSS 3</span>
+                        <span class="tag">Vanilla JS</span>
+                    </div>
+                    <p class="project-description">I guess the title says it all. It is just a mockup.</p>
+                    <div class="project-actions">
+                        <a href="https://gleeful-rabanadas-ce2e31.netlify.app/" class="go-btn">Next</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-content">
+                    <h3 class="project-title">Top 7 Christams Movies</h3>
+                    <div class="project-tags">
+                        <span class="tag">HTML 5</span>
+                        <span class="tag">CSS 3</span>
+                        <span class="tag">Vanilla JS</span>
+                    </div>
+                    <p class="project-description">I implemented there a small page as part of an Adobe bootcamp.</p>
+                    <div class="project-actions">
+                        <a href="https://taupe-wisp-60c01b.netlify.app/" class="go-btn">Open</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-content">
+                    <h3 class="project-title">Dymonde OS</h3>
+                    <div class="project-tags">
+                        <span class="tag">HTML 5</span>
+                        <span class="tag">CSS 3</span>
+                        <span class="tag">Vanilla JS</span>
+                    </div>
+                    <p class="project-description">I implemented a wannabe macos graphical interface emulator, desktop environment simulator, GUI with Vanilla JS mostly</p>
+                    <div class="project-actions">
+                        <a href="https://fantastic-rolypoly-986b0a.netlify.app/" class="go-btn">Run</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- CV Section -->
+        <div class="cv-section">
+            <div class="cv-card">
+                <h2>Experience</h2>
+                <p>I am a developer who is very passionate about creative design and writing. Other passions of mine are data analyisis and education.</p>
+                <div class="cv-buttons">
+                    <a href="https://resumepmt.netlify.app/" class="btn btn-primary">See full Resume</a>
+                    <a href="https://drive.google.com/file/d/1LZcwoP6xt7-i5NnoaQwBH1AmVaUFvG9q/view?usp=sharing" class="btn btn-secondary">Download PDF</a>
+                </div>
+            </div>
+        </div>
+
+        
+        <!-- Video Section TikTok -->
+        <div class="video-section">
+            <h2>Video TikTok</h2>
+            <div class="video-grid">
+                <!-- Video cu thumbnail și link -->
+                <a href="https://www.tiktok.com/@useraccnotfnd/video/7508397250050116886" class="video-card has-thumbnail" target="_blank">
+                    <img src="iconpack.png" alt="iPhone theme icon pack ad" class="video-thumbnail">
+                    <div class="video-overlay">
+                        <div class="video-title">iPhone theme icon pack ad</div>
+                        <div class="play-icon">▶</div>
+                    </div>
+                </a>
+
+                <a href="https://www.tiktok.com/@useraccnotfnd/video/7508396826454674710" class="video-card has-thumbnail" target="_blank">
+                    <img src="books.png" alt="My books" class="video-thumbnail">
+                    <div class="video-overlay">
+                        <div class="video-title">My books</div>
+                        <div class="play-icon">▶</div>
+                    </div>
+                </a>
+
+                <a href="https://www.tiktok.com/@useraccnotfnd/video/7508396517133225238" class="video-card has-thumbnail" target="_blank">
+                    <img src="tut.png" alt="How I draw" class="video-thumbnail">
+                    <div class="video-overlay">
+                        <div class="video-title">How I draw</div>
+                        <div class="play-icon">▶</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Video Section YouTube -->
+        <div class="video-section">
+            <h2>Video YouTube</h2>
+            <div class="video-grid">
+                <a href=https://www.youtube.com/watch?v=ah5n4iDEPDQ" class="video-card has-thumbnail" target="_blank">
+                    <img src="animatic.png" alt="Animatic WIP" class="video-thumbnail">
+                    <div class="video-overlay">
+                        <div class="video-title">Animatic WIP</div>
+                        <div class="play-icon">▶</div>
+                    </div>
+                </a>
+
+                <a href="https://www.youtube.com/watch?v=IXQEO3rffTE" class="video-card has-thumbnail" target="_blank">
+                    <img src="meme1.png" alt="Meme 1" class="video-thumbnail">
+                    <div class="video-overlay">
+                        <div class="video-title">Meme 1</div>
+                        <div class="play-icon">▶</div>
+                    </div>
+                </a>
+
+                <a href="https://www.youtube.com/watch?v=FjxcKxyniIg" class="video-card has-thumbnail" target="_blank">
+                    <img src="meme2.png" alt="Meme 2" class="video-thumbnail">
+                    <div class="video-overlay">
+                        <div class="video-title">Meme 2</div>
+                        <div class="play-icon">▶</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+         <div class="books-section">
+            <h2>Recent art</h2>
+            <div class="books-grid">
+                <div class="book-card">
+                    <div class="book-cover has-image">
+                        <img src="cover.jpg" alt="Book cover" class="book-cover-image">
+                        <div class="book-overlay">
+                            <div class="book-icon">🎨</div>
+                        </div>
+                    </div>
+                    <h3>"Book cover"</h3>
+                    <p>This is my tentative to make a cover my book (in Photoshop).</p>
+                    <a href="galerie.html" class="btn btn-primary" style="margin-top: 20px; display: inline-block;">More by this artist</a>
+                </div>
+
+                <div class="book-card">
+                    <div class="book-cover has-image">
+                        <img src="characters.jpg" alt="That night" class="book-cover-image">
+                        <div class="book-overlay">
+                            <div class="book-icon">✨</div>
+                        </div>
+                    </div>
+                    <h3>"That night"</h3>
+                    <p>There I drew the protagonists of a story which I am writing at the moment (I am in hiatus).</p>
+                    <a href="galerie.html" class="btn btn-primary" style="margin-top: 20px; display: inline-block;">More by this artist</a>
+                </div>
+
+                <div class="book-card">
+                    <div class="book-cover has-image">
+                        <img src="car1.jpg" alt="Car poster" class="book-cover-image">
+                        <div class="book-overlay">
+                            <div class="book-icon">🖼️</div>
+                        </div>
+                    </div>
+                    <h3>"Car Poster"</h3>
+                    <p>Car poster with specifications. DM me for details</p>
+                    <a href="galerie.html" class="btn btn-primary" style="margin-top: 20px; display: inline-block;">More by this artist</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Books Section Creative Writing -->
+        <div class="books-section">
+            <h2>Creative writing</h2>
+            <div class="books-grid">
+                <div class="book-card">
+                    <div class="book-cover has-image">
+                        <img src="carte1.jpeg" alt="Imparatia Norilor - Intoarcerea Acasa" class="book-cover-image">
+                        <div class="book-overlay">
+                            <div class="book-icon">📚</div>
+                        </div>
+                    </div>
+                    <h3>"Imparatia Norilor<br>Intoarcerea Acasa"</h3>
+                    <p>First ever book published. It is in Romanian.</p>
+                    <a href="carte1.html" class="btn btn-primary" style="margin-top: 20px; display: inline-block;">More ></a>
+                </div>
+
+                <div class="book-card">
+                    <div class="book-cover has-image">
+                        <img src="carte2.jpg" alt="Imparatia Norilor - Cartile Alpheei" class="book-cover-image">
+                        <div class="book-overlay">
+                            <div class="book-icon">📖</div>
+                        </div>
+                    </div>
+                    <h3>"Imparatia Norilor<br>Cartile Alpheei"</h3>
+                    <p>The sequel to the first volume.</p>
+                    <a href="carte2.html" class="btn btn-primary" style="margin-top: 20px; display: inline-block;">More ></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <h2>Shall we collab?</h2>
+            <p>I'm always down for working and helping at creative projects and cool events and collaborations!</p>
+            <div class="social-links">
+                <a href="mailto:popescumariateodora@yahoo.com">📧</a>
+                <a href="https://www.linkedin.com/in/mariateodorapopescu/">💼</a>
+                <a href="https://github.com/mariateodorapopescu">💻</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Animații pe scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Aplică animații la carduri
+        document.querySelectorAll('.project-card, .cv-card, .book-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'all 0.6s ease';
+            observer.observe(card);
+        });
+
+        // Efecte hover pe butoane
+        document.querySelectorAll('.go-btn, .btn').forEach(btn => {
+            btn.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-2px) scale(1.05)';
+            });
+            
+            btn.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Smooth scroll pentru linkuri interne
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

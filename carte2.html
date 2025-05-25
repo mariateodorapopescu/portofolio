@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imparatia Norilor. Cartile Alpheei</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+        }
+
+        /* Buton înapoi */
+        .back-btn {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 15px 25px;
+            text-decoration: none;
+            color: #fff;
+            font-weight: 600;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(-5px);
+        }
+
+        /* Splash elements */
+        .splash-orange {
+            position: absolute;
+            top: -200px;
+            right: -300px;
+            width: 600px;
+            height: 500px;
+            background: #FF6B35;
+            border-radius: 50% 30% 60% 40% / 40% 60% 30% 70%;
+            z-index: 1;
+            animation: float 10s ease-in-out infinite;
+        }
+
+        .splash-yellow {
+            position: absolute;
+            bottom: -100px;
+            left: -200px;
+            width: 400px;
+            height: 350px;
+            background: #FFEF00;
+            border-radius: 60% 40% 30% 70% / 50% 30% 70% 50%;
+            z-index: 1;
+            animation: float 12s ease-in-out infinite reverse;
+        }
+
+        .small-dot-1 {
+            position: absolute;
+            top: 100px;
+            left: 150px;
+            width: 40px;
+            height: 40px;
+            background: #FFEF00;
+            border-radius: 50%;
+            z-index: 2;
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        .small-dot-2 {
+            position: absolute;
+            bottom: 200px;
+            right: 100px;
+            width: 30px;
+            height: 30px;
+            background: #FF6B35;
+            border-radius: 50%;
+            z-index: 2;
+            animation: pulse 3s ease-in-out infinite 1s;
+        }
+
+        .small-dot-3 {
+            position: absolute;
+            top: 60%;
+            left: 60px;
+            width: 25px;
+            height: 35px;
+            background: #9C27B0;
+            border-radius: 60% 40% 50% 70%;
+            transform: rotate(25deg);
+            z-index: 2;
+            animation: float 6s ease-in-out infinite 2s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.2); opacity: 1; }
+        }
+
+        /* Main content */
+        .book-main {
+            text-align: center;
+            margin: 100px 0;
+            position: relative;
+            z-index: 10;
+        }
+
+        .book-cover {
+            width: 200px;
+            height: 280px;
+            background: url('carte2.jpg');
+            margin: 0 auto 40px;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(255, 107, 53, 0.3);
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            cursor: pointer;
+        }
+
+        .book-cover:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 30px 80px rgba(255, 107, 53, 0.4);
+        }
+
+        .book-cover::before {
+            content: '';
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        .book-title {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+            text-align: center;
+            text-transform: lowercase;
+            color: #fff;
+        }
+
+        .book-subtitle {
+            font-size: 1.2rem;
+            color: #ccc;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Sinopsis */
+        .synopsis-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 25px;
+            padding: 50px 40px;
+            margin: 60px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            z-index: 5;
+        }
+
+        .synopsis-section h2 {
+            font-size: 2rem;
+            font-weight: 900;
+            margin-bottom: 30px;
+            text-align: center;
+            text-transform: lowercase;
+            color: #FFEF00;
+        }
+
+        .synopsis-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #ddd;
+            text-align: left;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .synopsis-text p {
+            margin-bottom: 20px;
+        }
+
+        /* ISBN Section */
+        .isbn-section {
+            text-align: center;
+            margin: 40px 0;
+            position: relative;
+            z-index: 5;
+        }
+
+        .isbn-box {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 30px;
+            display: inline-block;
+            margin: 20px;
+        }
+
+        .isbn-box h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #FFEF00;
+            text-transform: lowercase;
+        }
+
+        .isbn-box p {
+            font-size: 1.1rem;
+            font-family: 'Courier New', monospace;
+            color: #fff;
+        }
+
+        /* Links Section */
+        .links-section {
+            text-align: center;
+            margin: 60px 0;
+            position: relative;
+            z-index: 5;
+        }
+
+        .links-section h2 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 40px;
+            text-transform: lowercase;
+            color: #fff;
+        }
+
+        .store-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        .store-link {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid #FFEF00;
+            border-radius: 15px;
+            padding: 25px 35px;
+            text-decoration: none;
+            color: #fff;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+            overflow: hidden;
+            min-width: 200px;
+            text-transform: lowercase;
+        }
+
+        .store-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #FFEF00, #FF6B35);
+            transition: left 0.4s ease;
+            z-index: -1;
+        }
+
+        .store-link:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(255, 239, 0, 0.4);
+            color: #000;
+            border-color: transparent;
+        }
+
+        .store-link:hover::before {
+            left: 0;
+        }
+
+        .store-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        /* Footer minimal */
+        .footer {
+            text-align: center;
+            padding: 40px;
+            margin-top: 100px;
+            position: relative;
+            z-index: 5;
+        }
+
+        .footer p {
+            color: #666;
+            font-size: 0.9rem;
+            text-transform: lowercase;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .store-links {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .store-link {
+                width: 250px;
+            }
+            
+            .book-title {
+                font-size: 2.2rem;
+            }
+            
+            .synopsis-section {
+                padding: 30px 20px;
+            }
+
+            .splash-orange,
+            .splash-yellow {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Splash elements -->
+    <div class="splash-orange"></div>
+    <div class="splash-yellow"></div>
+    <div class="small-dot-1"></div>
+    <div class="small-dot-2"></div>
+    <div class="small-dot-3"></div>
+
+    <!-- Buton înapoi -->
+    <a href="index.html" class="back-btn">← Go back</a>
+
+    <div class="container">
+        <!-- Main Book Section -->
+        <div class="book-main">
+            <div class="book-cover">
+                
+            </div>
+            
+            <h1 class="book-title">Imparatia Norilor</h1>
+            <p class="book-subtitle">Cartile Alpheei</p>
+        </div>
+
+        <!-- Sinopsis -->
+        <div class="synopsis-section">
+            <h2>Sinopsis</h2>
+            <div class="synopsis-text">
+                <p>
+                  Dupa ce Regina Fasta-Lapis Lazuli aproape ca a fost asasinata, Faustian Diaz, este numit Gardianul Reginei, 
+                  pentru a o proteja. Insa el nu reuseste sa-si duca misiunea la bun sfarsit deoarece, nu dupa mult timp, 
+                  Darksaber, in urma refuzului reginei de a incheia o alianta intre Alpheea si Liga Ingerilor 
+                  Intunericului, proclama razboi. </p><p>
+                    Cu toate acestea, la douazeci de ani dupa invazie, tanara Fadema promite ca va elibera de sub dictatura 
+                    lui Darksaber, cei cativa locuitori ai Alpheei ramasi in viata, avand sa se lupte cu nemilosul lord. 
+                    Va reusi Fadema sa invinga sau va condamna la moarte si ultimii locuitori ramasi ai Alpheei?
+                </p>
+            </div>
+        </div>
+
+        <!-- ISBN -->
+        <div class="isbn-section">
+            <div class="isbn-box">
+                <h3>ISBN</h3>
+                <p>9786067494440</p>
+            </div>
+        </div>
+
+        <!-- Store Links -->
+        <div class="links-section">
+            <h2>Disponibil la</h2>
+            
+            <div class="store-links">
+                <a href="https://grupdzc.ro/imparatia-norilor-cartile-alpheei-elsa-pop?srsltid=AfmBOorhPocLqgK5QZ9st97fCE5gjGB7xjkef9ahLmsiZvNnj7SaBbGw" class="store-link">
+                    <span class="store-icon">📚</span>
+                    Grup dzc
+                </a>
+                
+                <a href="https://www.librariadelfin.ro/carte/imparatia-norilor-cartile-alpheei-elsa-pop--i80478?srsltid=AfmBOoonkx7RnK5Kg1MrUj8UtDLSmlBHdn4M-Oh3g1INYkTgF_8hZFXN" class="store-link">
+                    <span class="store-icon">📖</span>
+                    Libraria Delfin
+                </a>
+                
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>©PMT2025 toate drepturile rezervate</p>
+        </div>
+    </div>
+
+    <script>
+        // Animații simple pe scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Aplică animații
+        document.querySelectorAll('.synopsis-section, .isbn-section, .links-section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(30px)';
+            section.style.transition = 'all 0.6s ease';
+            observer.observe(section);
+        });
+
+        // Hover effect pe book cover
+        const bookCover = document.querySelector('.book-cover');
+        bookCover.addEventListener('click', function() {
+            this.style.transform = 'translateY(-10px) scale(1.1) rotate(5deg)';
+            setTimeout(() => {
+                this.style.transform = 'translateY(0) scale(1) rotate(0deg)';
+            }, 300);
+        });
+    </script>
+</body>
+</html>

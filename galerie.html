@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Art Gallery - My Creative Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+        }
+
+        /* Back button */
+        .back-btn {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 15px 25px;
+            text-decoration: none;
+            color: #fff;
+            font-weight: 600;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(-5px);
+        }
+
+        /* Splash elements identical to portfolio */
+        .splash-orange {
+            position: absolute;
+            top: -200px;
+            right: -300px;
+            width: 800px;
+            height: 600px;
+            background: #FF6B35;
+            border-radius: 50% 30% 60% 40% / 40% 60% 30% 70%;
+            z-index: 1;
+            animation: float 10s ease-in-out infinite;
+        }
+
+        .splash-yellow {
+            position: absolute;
+            bottom: -100px;
+            left: -200px;
+            width: 500px;
+            height: 400px;
+            background: #FFEF00;
+            border-radius: 60% 40% 30% 70% / 50% 30% 70% 50%;
+            z-index: 1;
+            animation: float 12s ease-in-out infinite reverse;
+        }
+
+        .small-dot-1 {
+            position: absolute;
+            top: 200px;
+            left: 200px;
+            width: 60px;
+            height: 60px;
+            background: #FFEF00;
+            border-radius: 50%;
+            z-index: 2;
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        .small-dot-2 {
+            position: absolute;
+            bottom: 300px;
+            right: 150px;
+            width: 40px;
+            height: 40px;
+            background: #FF6B35;
+            border-radius: 50%;
+            z-index: 2;
+            animation: pulse 3s ease-in-out infinite 1s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.2); opacity: 1; }
+        }
+
+        /* Centered header */
+        .header {
+            text-align: center;
+            padding: 100px 0;
+            position: relative;
+            z-index: 10;
+        }
+
+        .header h1 {
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+            text-transform: lowercase;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            color: #ccc;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Main section */
+        .main-section {
+            margin: 80px 0;
+            position: relative;
+            z-index: 5;
+        }
+
+        .warning-box {
+            background: rgba(255, 239, 0, 0.1);
+            border: 2px solid rgba(255, 239, 0, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .warning-box h2 {
+            font-size: 2rem;
+            font-weight: 900;
+            color: #FFEF00;
+            margin-bottom: 20px;
+            text-transform: lowercase;
+        }
+
+        .warning-box p {
+            font-size: 1.1rem;
+            color: #ddd;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        /* Screenshots gallery */
+        .screenshots-section h2 {
+            font-size: 3rem;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 60px;
+            text-transform: lowercase;
+        }
+
+        .screenshots-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .screenshot-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .screenshot-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #FF6B35, #FFEF00);
+            transition: left 0.5s ease;
+            z-index: 1;
+            opacity: 0.1;
+        }
+
+        .screenshot-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 25px 60px rgba(255, 107, 53, 0.2);
+            border-color: rgba(255, 239, 0, 0.4);
+        }
+
+        .screenshot-card:hover::before {
+            left: 0;
+        }
+
+        .screenshot-card > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        .screenshot-preview {
+            height: 250px;
+            background: linear-gradient(45deg, #222, #444);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: #999;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .screenshot-preview::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 239, 0, 0.2), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .screenshot-info {
+            padding: 30px;
+        }
+
+        .screenshot-info h3 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            text-transform: lowercase;
+        }
+
+        .screenshot-info p {
+            color: #ccc;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .screenshot-date {
+            font-size: 0.9rem;
+            color: #888;
+            font-style: italic;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 80px 40px;
+            margin-top: 100px;
+            position: relative;
+            z-index: 5;
+        }
+
+        .footer h3 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+            text-transform: lowercase;
+        }
+
+        .footer p {
+            color: #ccc;
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .contact-btn {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid #FFEF00;
+            border-radius: 15px;
+            padding: 18px 35px;
+            text-decoration: none;
+            color: #FFEF00;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+            overflow: hidden;
+            text-transform: lowercase;
+        }
+
+        .contact-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #FFEF00, #FF6B35);
+            transition: left 0.4s ease;
+            z-index: -1;
+        }
+
+        .contact-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            color: #000;
+            border-color: transparent;
+            box-shadow: 0 15px 40px rgba(255, 239, 0, 0.4);
+        }
+
+        .contact-btn:hover::before {
+            left: 0;
+        }
+
+        /* Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(15px);
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .lightbox-image {
+            width: 100%;
+            max-width: 800px;
+            height: 400px;
+            background: linear-gradient(45deg, #333, #555);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #999;
+            margin-bottom: 20px;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            color: #fff;
+            font-size: 2rem;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .lightbox-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .screenshots-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .warning-box,
+            .footer {
+                padding: 40px 20px;
+            }
+
+            .splash-orange,
+            .splash-yellow {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Splash elements -->
+    <div class="splash-orange"></div>
+    <div class="splash-yellow"></div>
+    <div class="small-dot-1"></div>
+    <div class="small-dot-2"></div>
+
+    <!-- Back button -->
+    <a href="index.html" class="back-btn">← Go back</a>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>my art gallery</h1>
+            <p>a collection of original drawings and creative artwork made by me</p>
+        </div>
+
+        <!-- Main section -->
+        <div class="main-section">
+            <!-- Info box -->
+            <div class="warning-box">
+                <h2>🎨 original artwork</h2>
+                <p>
+                    welcome to my personal art gallery! here you'll find a curated selection of my original drawings, 
+                    digital illustrations, and creative experiments. each piece represents hours of passion and dedication.
+                </p>
+                <p>
+                    from traditional sketches to digital masterpieces and even landscape and flower photography, this collection showcases my artistic journey 
+                    and creative evolution alongside my technical programming skills.
+                </p>
+            </div>
+
+            <!-- Artwork gallery -->
+            <div class="screenshots-section">
+                <h2>🖼️ featured artwork</h2>
+                
+                <div class="screenshots-grid">
+                    <div class="screenshot-card" onclick="openLightbox('realistic portrait', 'detailed pencil drawing exploring human facial features and expressions')">
+                        <div class="screenshot-preview">
+                            <img src="portrait.jpg" alt="Realistic Portrait" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <div class="screenshot-info">
+                            <h3>realistic portrait study</h3>
+                            <p>detailed pencil drawing with realistic shading and expression work</p>
+                            <div class="screenshot-date">november 9, 2019</div>
+                        </div>
+                    </div>
+
+                    <div class="screenshot-card" onclick="openLightbox('digital portrait', 'detailed digital drawing with realistic shading and expression work')">
+                        <div class="screenshot-preview">
+                            <img src="digitalportrait.jpg" alt="banner" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <div class="screenshot-info">
+                            <h3>digital portrait</h3>
+                            <p>detailed digital drawing with realistic shading and expression work</p>
+                            <div class="screenshot-date">july 12, 2022</div>
+                        </div>
+                    </div>
+
+                    <div class="screenshot-card" onclick="openLightbox('iPhone aesthetic icon pack', 'You can find it on handy app.')">
+                        <div class="screenshot-preview">
+                            <img src="iconpack.jpg" alt="icon pack" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <div class="screenshot-info">
+                            <h3>iPhone aesthetic icon pack</h3>
+                            <p>You can find it on handy app.</p>
+                            <div class="screenshot-date">july 9, 2023</div>
+                        </div>
+                    </div>
+
+                    <div class="screenshot-card" onclick="openLightbox('Car poster with specifications', 'DM me for details')">
+                        <div class="screenshot-preview">
+                            <img src="car1.jpg" alt="car poster" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <div class="screenshot-info">
+                            <h3>Car poster with specifications</h3>
+                            <p>DM me for details</p>
+                            <div class="screenshot-date">january 28, 2025</div>
+                        </div>
+                    </div>
+
+                    <div class="screenshot-card" onclick="openLightbox('Car drawing poste', 'colorful digital car drawing')">
+                        <div class="screenshot-preview">
+                            <img src="car2.jpg" alt="car drawing" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <div class="screenshot-info">
+                            <h3>Car drawing poster</h3>
+                            <p>colorful digital car drawing</p>
+                            <div class="screenshot-date">february 14, 2025</div>
+                        </div>
+                    </div>
+
+
+                    <div class="screenshot-card" onclick="openLightbox('art scene from a book in writing', 'original characters design with personality and story development')">
+                        <div class="screenshot-preview">
+                            <img src="characters.jpg" alt="charcters" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <div class="screenshot-info">
+                            <h3>art scene from a book in writing</h3>
+                            <p>original characters design with personality and story development</p>
+                            <div class="screenshot-date">september 10, 2024</div>
+                        </div>
+                    </div>
+
+                    <div class="screenshot-card" onclick="openLightbox('landscape artwork', 'beautiful natural scenery captured through artistic interpretation and mood')">
+                        <div class="screenshot-preview">
+                            <img src="landscape.jpg" alt="landscape" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <div class="screenshot-info">
+                            <h3>landscape artwork</h3>
+                            <p>beautiful natural scenery captured through artistic interpretation and mood</p>
+                            <div class="screenshot-date">august 18, 2019</div>
+                        </div>
+                    </div>
+
+                     <div class="screenshot-card" onclick="openLightbox('flower photography', 'beautiful natural flower photography with vibrant colors and natural lighting')">
+                        <div class="screenshot-preview">
+                            <img src="flowers.jpg" alt="flowers" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <div class="screenshot-info">
+                            <h3>flower photography</h3>
+                            <p>natural scenery with flowers</p>
+                            <div class="screenshot-date">may 4, 2025</div>
+                        </div>
+                    </div>
+
+                    <div class="screenshot-card" onclick="openLightbox('scenery drawing', 'cute minimal anime style scenery drawing')">
+                        <div class="screenshot-preview">
+                            <img src="scenery.jpg" alt="letters" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <div class="screenshot-info">
+                            <h3>scenery drawing</h3>
+                            <p>cute minimal anime style scenery drawing</p>
+                            <div class="screenshot-date">july 5, 2020</div>
+                        </div>
+                    </div>
+
+                    <div class="screenshot-card" onclick="openLightbox('fantasy concept art', 'imaginative world-building through visual storytelling and creative design')">
+                        <div class="screenshot-preview">
+                            <img src="map.jpg" alt="map" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <div class="screenshot-info">
+                            <h3>fantasy concept art</h3>
+                            <p>imaginative world-building with fantasy creatures and environments</p>
+                            <div class="screenshot-date">october 3, 2022</div>
+                        </div>
+                    </div>
+
+                    <div class="screenshot-card" onclick="openLightbox('Book cover', 'Book cover I designed for my fantasy book in writing')">
+                        <div class="screenshot-preview">
+                            <img src="cover.jpg" alt="cover" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <div class="screenshot-info">
+                            <h3>Book cover</h3>
+                            <p>Book cover I designed for my fantasy book in writing</p>
+                            <div class="screenshot-date">september 19, 2022</div>
+                        </div>
+                    </div>
+                    <div class="screenshot-card" onclick="openLightbox('Digital mural abstract art', 'Abstract art character made of geomteric forms')">
+                        <div class="screenshot-preview">
+                            <img src="mural.jpg" alt="mural" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <div class="screenshot-info">
+                            <h3>Digital mural abstract art</h3>
+                            <p>Abstract art character made of geomteric forms</p>
+                            <div class="screenshot-date">july 3, 2021</div>
+                        </div>
+                    </div>
+
+                    <div class="screenshot-card" onclick="openLightbox('Chibi', 'Anime style small character from my fanatsy story')">
+                        <div class="screenshot-preview">
+                            <img src="chibi.jpg" alt="chibi" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <div class="screenshot-info">
+                            <h3>Chibi</h3>
+                            <p>Anime style small character from my fanatsy story</p>
+                            <div class="screenshot-date">october 3, 2023</div>
+                        </div>
+                    </div>
+
+                    <div class="screenshot-card" onclick="openLightbox('Character page', 'Movie Character poster with real life actors, edited in Photoshop')">
+                        <div class="screenshot-preview">
+                            <img src="poster.jpg" alt="Movie character" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <div class="screenshot-info">
+                            <h3>Movie character</h3>
+                            <p>Movie Character poster with real life actors, edited in Photoshop</p>
+                            <div class="screenshot-date">september 2, 2023</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <h3>let's create together</h3>
+            <p>
+                love my art style? i'm always open to commissions and creative collaborations. 
+                let's bring your vision to life through art!
+            </p>
+            <a href="mailto:popescumariateodora@yahoo.com" class="contact-btn">🎨 commission me</a>
+        </div>
+    </div>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <span class="lightbox-close" onclick="closeLightbox()">✕</span>
+        <div class="lightbox-content">
+            <div class="lightbox-image">
+                🖼️ artwork preview
+            </div>
+            <h3 id="lightbox-title" style="color: #FFEF00; margin-bottom: 10px; text-transform: lowercase;"></h3>
+            <p id="lightbox-description" style="color: #ccc;"></p>
+            <p style="margin-top: 20px; color: #888; font-style: italic;">
+                High-resolution artwork available upon request for portfolio viewing
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Lightbox functions
+        function openLightbox(title, description) {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxTitle = document.getElementById('lightbox-title');
+            const lightboxDescription = document.getElementById('lightbox-description');
+            
+            lightboxTitle.textContent = title;
+            lightboxDescription.textContent = description;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close lightbox with ESC key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeLightbox();
+            }
+        });
+
+        // Close lightbox by clicking outside
+        document.getElementById('lightbox').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeLightbox();
+            }
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Apply animations to cards
+        document.querySelectorAll('.screenshot-card').forEach((card, index) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'all 0.6s ease';
+            card.style.transitionDelay = (index * 0.1) + 's';
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
